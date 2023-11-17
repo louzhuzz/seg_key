@@ -1,0 +1,40 @@
+`timescale 1 ms/ 1 ms
+module key_debounce_vlg_tst();
+
+reg btn0;
+reg clk;
+reg reset;
+                                            
+wire [7:0]  cat;
+wire o_key;
+wire [6:0]  seg;
+
+                         
+key_debounce i1 (
+
+	.btn0(btn0),
+	.cat(cat),
+	.clk(clk),
+	.o_key(o_key),
+	.reset(reset),
+	.seg(seg)
+);
+initial begin
+		clk = 0;
+		btn0 = 0;
+		reset = 1;
+
+		#10 reset = 0;
+		#1200 btn0 = 1;
+		#10 btn0 = 0;
+		#1000 btn0 = 1;
+		#10 btn0 = 0;
+		#1300 reset = 1;
+		#30 reset = 0;
+		
+
+	end
+always #5 clk = ~clk;
+                                                  
+endmodule
+
